@@ -41,7 +41,7 @@ plt.plot(x_values, likelyhood_Class_1, label="P(pH | Red Wine)")
 plt.plot(x_values, likelyhood_Class_2, label="P(pH | White Wine)")
 
 plt.legend()
-plt.title("Likelyhood function for Red and White Wine based on pH level")
+plt.title("Likelihood function for Red and White Wine based on pH level")
 plt.xlabel("pH")
 plt.ylabel("Probability")
 plt.show()
