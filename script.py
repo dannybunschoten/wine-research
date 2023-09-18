@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 white = pd.read_csv("winequality-white.csv", sep=";")
 white["wine type"] = 1
@@ -16,11 +17,31 @@ data.drop(labels=["volatile acidity", "quality", "citric acid", "residual sugar"
 
 print(data.head())
 
-import matplotlib.pyplot as plt
+def gaussian_pdf(x, mu, sigma):
+    return (1 / (sigma * np.sqrt(2 * np.pi)) * np.exp(-1/2 * ((x-mu)/ sigma) ** 2))
 
-plt.scatter(data["pH"], data["wine type"])
+red_wine_ph_mean = data[data["wine type"] == 0]["pH"].mean()
+print(f"Mean of pH in red wine: {red_wine_ph_mean}")
+
+white_wine_ph_mean = data[data["wine type"] == 1]["pH"].mean()
+print(f"Mean of pH in white wine: {white_wine_ph_mean}")
+
+red_wine_ph_std = data[data["wine type"] == 0]["pH"].std()
+print(f"Standard deviation of pH in red wine: {red_wine_ph_std}")
+
+white_wine_ph_std = data[data["wine type"] == 1]["pH"].std()
+print(f"Standard deviation of pH in white wine: {white_wine_ph_std}")
+
+x_values = np.linspace(2.6, 3.75, 400)
+
+likelyhood_Class_1 = gaussian_pdf(x_values, red_wine_ph_mean, red_wine_ph_std)
+likelyhood_Class_2 = gaussian_pdf(x_values, white_wine_ph_mean, white_wine_ph_std)
+
+plt.plot(x_values, likelyhood_Class_1, label="P(pH | Red Wine)")
+plt.plot(x_values, likelyhood_Class_2, label="P(pH | White Wine)")
+
+plt.legend()
+plt.title("Likelyhood function for Red and White Wine based on pH level")
 plt.xlabel("pH")
-plt.ylabel("wine type")
+plt.ylabel("Probability")
 plt.show()
-
-def gaussian(x, )
