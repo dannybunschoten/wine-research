@@ -17,6 +17,15 @@ data.drop(labels=["volatile acidity", "quality", "citric acid", "residual sugar"
 
 print(data.head())
 
+
+plt.hist(data[data["wine type"] == 0]["pH"], bins=15)
+plt.title("histogram of pH values in red wine")
+
+plt.hist(data[data["wine type"] == 1]["pH"], bins=15)
+plt.title("histogram of pH values in white wine")
+
+plt.show()
+
 def gaussian_pdf(x, mu, sigma):
     return (1 / (sigma * np.sqrt(2 * np.pi)) * np.exp(-1/2 * ((x-mu)/ sigma) ** 2))
 
