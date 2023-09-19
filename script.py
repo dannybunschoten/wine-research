@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 white = pd.read_csv("winequality-white.csv", sep=";")
 white["wine type"] = 1
@@ -9,6 +10,14 @@ red["wine type"] = 0
 white = white.sample(n=len(red), random_state=42)
 data = pd.concat([white, red], ignore_index=True)
 
+sns.pairplot(
+    data.drop(labels=["volatile acidity", "quality", "citric acid", "residual sugar", "chlorides", "free sulfur dioxide", "total sulfur dioxide", "sulphates", "fixed acidity"], axis=1), 
+    hue='wine type', 
+    markers=['o', 's'],
+    plot_kws={'alpha': 0.5}
+)
+
+plt.show()
 
 print(data.head())
 print(data.shape[1])
@@ -25,6 +34,8 @@ plt.hist(data[data["wine type"] == 1]["pH"], bins=15)
 plt.title("histogram of pH values in white wine")
 
 plt.show()
+
+
 
 def gaussian_pdf(x, mu, sigma):
     return (1 / (sigma * np.sqrt(2 * np.pi)) * np.exp(-1/2 * ((x-mu)/ sigma) ** 2))
